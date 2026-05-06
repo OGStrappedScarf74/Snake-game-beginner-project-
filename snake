@@ -1,0 +1,58 @@
+from turtle import Turtle , Screen
+import random
+import time
+""""this was my favourite part of the code"""
+
+STARTING_POSITIONS = [(20, 0), (0, 0), (-20, 0)]
+MOVE_DISTANCE = 20
+
+class Snake():
+    def __init__(self):
+        self.boxes = []#created an empty  list for snakes
+        self.create_snake()
+
+
+    def create_snake(self):
+        for i in range(3):#basically lines up the snakes
+            new_box = Turtle(shape="square")
+            new_box.color("white")
+            new_box.penup()
+            new_box.goto(x=STARTING_POSITIONS[i][0], y=STARTING_POSITIONS[i][1])
+            self.boxes.append(new_box)
+
+    def move_snake(self):#to move the snakes
+        for box in range(len(self.boxes) - 1, 0, -1):
+            nx_pos = self.boxes[box - 1].xcor()
+            ny_pos = self.boxes[box - 1].ycor()
+            self.boxes[box].goto(nx_pos, ny_pos)
+        self.boxes[0].forward(MOVE_DISTANCE)
+
+    def up(self):
+        self.boxes[0].setheading(90)
+
+    def down(self):
+        self.boxes[0].setheading(270)
+
+    def left(self):
+        self.boxes[0].setheading(180)
+
+    def right(self):
+        self.boxes[0].setheading(0)
+
+    def new_snake(self):#to create a new snake once u  eat food
+        las_box = self.boxes[-1].pos()
+        nt = Turtle("square")
+        nt.color("white")
+        nt.penup()
+        nt.goto(las_box)
+
+        self.boxes.append(nt)
+
+    def self_destruct(self):# to stop the game if player hits wall or tail
+        head = self.boxes[0]
+        if head.xcor() > 290 or head.xcor() < -290 or head.ycor() > 290 or head.ycor() < -290:
+            return True
+        for tail in self.boxes[1:]:
+            if head.distance(tail) < 10:
+                return True
+        return False
