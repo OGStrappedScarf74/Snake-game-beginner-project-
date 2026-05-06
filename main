@@ -1,0 +1,41 @@
+from turtle import Screen
+from snake import Snake
+import time
+from wasd import Foody
+from scorebaord import Score_board
+""""This is my first piece of code that im happy to share"""
+""""This is the main file"""
+
+""""Everything below this is assigning stuff"""
+sb = Score_board()
+food = Foody()
+a = sb.score
+screen = Screen()
+screen.setup(width=600, height=600)
+screen.bgcolor("black")
+screen.title("Snake Game")
+screen.tracer(0)
+snake = Snake()
+screen.listen()
+screen.onkey(snake.up, "Up")
+screen.onkey(snake.down, "Down")
+screen.onkey(snake.left, "Left")
+screen.onkey(snake.right, "Right")
+""""Everything above this asigning stuff """
+
+"""" The below lines of code is the main thing"""
+game_on = True
+while game_on:
+    screen.update()#updates the screen
+    time.sleep(0.1)#  I  made it slower
+
+    snake.move_snake()#moving the snake
+    if food.touch(snake.boxes[0]):# if statement to add snakes
+        snake.new_snake()
+        a += 1
+        sb.point() #scoreboard
+    if snake.self_destruct():#  to end the game if I collide with a wall or myself
+        print(f"GAME OVER!!! your score was {a}")
+        game_on = False
+
+screen.exitonclick()
