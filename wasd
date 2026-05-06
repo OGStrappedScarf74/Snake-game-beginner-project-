@@ -1,0 +1,29 @@
+from turtle import Turtle
+import random
+
+""""Sorry for the whacky file naming . this is the food file( had some bugs with the name so I changed it)"""
+
+
+
+class Foody(Turtle):
+    def __init__(self):
+        super().__init__()
+        ran_x = random.randint(-280, 280)
+        ran_y = random.randint(-280, 280)
+        self.shape("circle")
+        self.color("purple")
+        self.penup()
+        self.goto(ran_x, ran_y) #basically spawn the food
+        self.shapesize(stretch_wid=0.5, stretch_len=0.5)
+        self.refresh()
+
+    def refresh(self):
+        nx = random.randint(-280, 280)#refreshing the food
+        ny = random.randint(-280, 280)
+        self.goto(x=nx, y=ny)
+
+    def touch(self, snake_head):#if the snake touches the food
+        if self.distance(snake_head) < 15:
+            self.refresh()
+            return True
+        return False
